@@ -112,6 +112,10 @@ export default class Message extends React.Component {
   }
 
   renderStatus(status){
+    if (this.props.renderStatus instanceof Function) {
+      return this.props.renderStatus(status)
+    }
+
     if (status !== 'ErrorButton' && typeof status === 'string') {
       if (status.length > 0) {
         return (

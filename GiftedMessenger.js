@@ -81,6 +81,7 @@ var GiftedMessenger = React.createClass({
     hideTextInput: React.PropTypes.bool,
     forceRenderImage: React.PropTypes.bool,
     onChangeText: React.PropTypes.func,
+    renderStatus: React.PropTypes.func
   },
 
   getInitialState: function() {
@@ -188,6 +189,7 @@ var GiftedMessenger = React.createClass({
           forceRenderImage={this.props.forceRenderImage}
           onImagePress={this.props.onImagePress}
           renderCustomText={this.props.renderCustomText}
+          renderStatus={this.props.renderStatus}
           
           styles={this.styles}
         />
