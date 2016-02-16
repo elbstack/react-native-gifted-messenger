@@ -16,6 +16,8 @@ var {
   PixelRatio
 } = React;
 
+import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
+
 var moment = require('moment');
 
 var Button = require('react-native-button');
@@ -51,6 +53,7 @@ var GiftedMessenger = React.createClass({
       hideTextInput: false,
       submitOnReturn: false,
       forceRenderImage: false,
+      dismissKeyboardOnDrag: false,
       onChangeText: (text) => {},
     };
   },
@@ -80,6 +83,7 @@ var GiftedMessenger = React.createClass({
     onImagePress: React.PropTypes.func,
     hideTextInput: React.PropTypes.bool,
     forceRenderImage: React.PropTypes.bool,
+    dismissKeyboardOnDrag: React.PropTypes.bool,
     onChangeText: React.PropTypes.func,
     renderStatus: React.PropTypes.func
   },
@@ -409,7 +413,7 @@ var GiftedMessenger = React.createClass({
         style={{
           height: this.state.height,
         }}
-
+        onMoveShouldSetResponder={() => { this.props.dismissKeyboardOnDrag && dismissKeyboard() } }
       >
         <ListView
           ref='listView'
