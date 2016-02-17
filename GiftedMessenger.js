@@ -446,8 +446,12 @@ var GiftedMessenger = React.createClass({
 
           // not working android RN 0.14.2
           onKeyboardWillShow={this.onKeyboardWillShow}
-          onKeyboardDidShow={this.onKeyboardDidShow}
+          onKeyboardDidShow={Platform.OS === 'android' ? this.onKeyboardDidShowAndroid : this.onKeyboardDidShow}
           onKeyboardWillHide={this.onKeyboardWillHide}
+          onKeyboardDidHide={this.onKeyboardWillHide}
+
+
+
 
           /*
             keyboardShouldPersistTaps={false} // @issue keyboardShouldPersistTaps={false} + textInput focused = 2 taps are needed to trigger the ParsedText links
