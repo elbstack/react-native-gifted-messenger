@@ -256,6 +256,11 @@ var GiftedMessenger = React.createClass({
   onKeyboardDidShow(e) {
     this.scrollToBottom();
   },
+
+  onKeyboardDidShowAndroid(e) {
+    this.onKeyboardWillShow(e);
+    this.onKeyboardDidShow(e);
+  },
   
   scrollToBottom() {
     if (this.listHeight && this.footerY && this.footerY > this.listHeight) {
