@@ -14,7 +14,7 @@ var {
   TouchableHighlight,
   Platform,
   PixelRatio
-} = React;
+  } = React;
 
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 
@@ -194,7 +194,7 @@ var GiftedMessenger = React.createClass({
           onImagePress={this.props.onImagePress}
           renderCustomText={this.props.renderCustomText}
           renderStatus={this.props.renderStatus}
-          
+
           styles={this.styles}
         />
       </View>
@@ -214,7 +214,7 @@ var GiftedMessenger = React.createClass({
         disabled: true
       })
     }
-    
+
     this.props.onChangeText(text);
   },
 
@@ -230,7 +230,7 @@ var GiftedMessenger = React.createClass({
         allLoaded: true
       });
     }
-    
+
   },
 
   componentWillReceiveProps(nextProps) {
@@ -252,7 +252,7 @@ var GiftedMessenger = React.createClass({
       duration: 200,
     }).start();
   },
-  
+
   onKeyboardDidShow(e) {
     this.scrollToBottom();
   },
@@ -261,7 +261,7 @@ var GiftedMessenger = React.createClass({
     this.onKeyboardWillShow(e);
     this.onKeyboardDidShow(e);
   },
-  
+
   scrollToBottom() {
     if (this.listHeight && this.footerY && this.footerY > this.listHeight) {
       var scrollDistance = this.listHeight - this.footerY;
@@ -275,7 +275,7 @@ var GiftedMessenger = React.createClass({
       this.scrollResponder.scrollTo({y: -scrollDistance, animated: false});
     }
   },
-  
+
   onSend() {
     var message = {
       text: this.state.text.trim(),
@@ -292,7 +292,7 @@ var GiftedMessenger = React.createClass({
       this.onChangeText('');
     }
   },
-  
+
   postLoadEarlierMessages(messages = [], allLoaded = false) {
     this.prependMessages(messages);
     this.setState({
@@ -374,14 +374,14 @@ var GiftedMessenger = React.createClass({
 
   appendMessage(message = {}, scrollToBottom = true) {
     var rowID = this.appendMessages([message]);
-    
+
     if (scrollToBottom === true) {
       setTimeout(() => {
         // inspired by http://stackoverflow.com/a/34838513/1385109
         this.scrollToBottom();
       }, (Platform.OS === 'android' ? 200 : 100));
     }
-    
+
     return rowID;
   },
 
@@ -442,18 +442,18 @@ var GiftedMessenger = React.createClass({
               this.footerY = layout.y;
             }}></View>
           }}
-          
-          
-          
-          
+
+
+
+
           style={this.styles.listView}
 
 
           // not working android RN 0.14.2
-          onKeyboardWillShow={this.onKeyboardWillShow}
+          onKeyboardWillShow={Platform.OS === 'android' ? null : this.onKeyboardWillShow}
           onKeyboardDidShow={Platform.OS === 'android' ? this.onKeyboardDidShowAndroid : this.onKeyboardDidShow}
-          onKeyboardWillHide={this.onKeyboardWillHide}
-          onKeyboardDidHide={this.onKeyboardWillHide}
+          onKeyboardWillHide={Platform.OS === 'android' ? null : this.onKeyboardWillHide}
+          onKeyboardDidHide={Platform.OS === 'android' ? this.onKeyboardWillHide : null}
 
 
 
@@ -465,11 +465,11 @@ var GiftedMessenger = React.createClass({
 
           keyboardShouldPersistTaps={true}
           keyboardDismissMode='interactive'
-          
-          
+
+
           initialListSize={10}
           pageSize={this.props.messages.length}
-          
+
 
           {...this.props}
         />
