@@ -257,11 +257,6 @@ var GiftedMessenger = React.createClass({
     this.scrollToBottom();
   },
 
-  onKeyboardDidShowAndroid(e) {
-    this.onKeyboardWillShow(e);
-    this.onKeyboardDidShow(e);
-  },
-
   scrollToBottom() {
     if (this.listHeight && this.footerY && this.footerY > this.listHeight) {
       var scrollDistance = this.listHeight - this.footerY;
@@ -434,7 +429,7 @@ var GiftedMessenger = React.createClass({
                 this.scrollWithoutAnimationToBottom();
               });
             }
-            
+
           }}
           renderFooter={() => {
             return <View onLayout={(event)=>{
@@ -450,12 +445,9 @@ var GiftedMessenger = React.createClass({
 
 
           // not working android RN 0.14.2
-          onKeyboardWillShow={Platform.OS === 'android' ? null : this.onKeyboardWillShow}
-          onKeyboardDidShow={Platform.OS === 'android' ? this.onKeyboardDidShowAndroid : this.onKeyboardDidShow}
-          onKeyboardWillHide={Platform.OS === 'android' ? null : this.onKeyboardWillHide}
-          onKeyboardDidHide={Platform.OS === 'android' ? this.onKeyboardWillHide : null}
-
-
+          onKeyboardWillShow={this.onKeyboardWillShow}
+          onKeyboardDidShow={this.onKeyboardDidShow}
+          onKeyboardWillHide={this.onKeyboardWillHide}
 
 
           /*
