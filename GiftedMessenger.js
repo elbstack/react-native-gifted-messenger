@@ -260,14 +260,20 @@ var GiftedMessenger = React.createClass({
   scrollToBottom() {
     if (this.listHeight && this.footerY && this.footerY > this.listHeight) {
       var scrollDistance = this.listHeight - this.footerY;
-      this.scrollResponder.scrollTo({y: -scrollDistance});
+      this.scrollResponder.scrollTo({
+        y: -scrollDistance,
+      });
     }
   },
 
   scrollWithoutAnimationToBottom() {
     if (this.listHeight && this.footerY && this.footerY > this.listHeight) {
       var scrollDistance = this.listHeight - this.footerY;
-      this.scrollResponder.scrollTo({y: -scrollDistance, animated: false});
+      this.scrollResponder.scrollTo({
+        y: -scrollDistance,
+        x: 0,
+        animated: false,
+      });
     }
   },
 
@@ -500,6 +506,7 @@ var GiftedMessenger = React.createClass({
           />
           <Button
             style={this.styles.sendButton}
+            styleDisabled={this.styles.sendButtonDisabled}
             onPress={this.onSend}
             disabled={this.state.disabled}
           >
