@@ -50,6 +50,7 @@ var GiftedMessenger = React.createClass({
       senderImage: null,
       sendButtonText: 'Send',
       onImagePress: null,
+      onMessageLongPress: null,
       hideTextInput: false,
       submitOnReturn: false,
       forceRenderImage: false,
@@ -64,6 +65,7 @@ var GiftedMessenger = React.createClass({
     styles: React.PropTypes.object,
     autoFocus: React.PropTypes.bool,
     onErrorButtonPress: React.PropTypes.func,
+    loadMessagesLater: React.PropTypes.bool,
     loadEarlierMessagesButton: React.PropTypes.bool,
     loadEarlierMessagesButtonText: React.PropTypes.string,
     onLoadEarlierMessages: React.PropTypes.func,
@@ -81,6 +83,7 @@ var GiftedMessenger = React.createClass({
     senderImage: React.PropTypes.object,
     sendButtonText: React.PropTypes.string,
     onImagePress: React.PropTypes.func,
+    onMessageLongPress: React.PropTypes.func,
     hideTextInput: React.PropTypes.bool,
     forceRenderImage: React.PropTypes.bool,
     dismissKeyboardOnDrag: React.PropTypes.bool,
@@ -192,6 +195,7 @@ var GiftedMessenger = React.createClass({
           position={rowData.position}
           forceRenderImage={this.props.forceRenderImage}
           onImagePress={this.props.onImagePress}
+          onMessageLongPress={this.props.onMessageLongPress}
           renderCustomText={this.props.renderCustomText}
           renderStatus={this.props.renderStatus}
 
@@ -226,9 +230,12 @@ var GiftedMessenger = React.createClass({
     } else if (this.props.initialMessages.length > 0) {
       this.appendMessages(this.props.initialMessages);
     } else {
-      this.setState({
-        allLoaded: true
-      });
+      // Set allLoaded, unless props.loadMessagesLater is set
+      if (!this.props.loadMessagesLater) {
+        this.setState({
+          allLoaded: true
+        });
+      }
     }
 
   },
@@ -254,7 +261,15 @@ var GiftedMessenger = React.createClass({
   },
 
   onKeyboardDidShow(e) {
+    if(React.Platform.OS == 'android') {
+      this.onKeyboardWillShow(e);
+    }
     this.scrollToBottom();
+  },
+  onKeyboardDidHide(e) {
+    if(React.Platform.OS == 'android') {
+      this.onKeyboardWillHide(e);
+    }
   },
 
   scrollToBottom() {
@@ -288,7 +303,7 @@ var GiftedMessenger = React.createClass({
     if (this.props.onCustomSend) {
       this.props.onCustomSend(message);
     } else {
-      var rowID = this.appendMessage(message);
+      var rowID = this.appendMessage(message, true);
       this.props.handleSend(message, rowID);
       this.onChangeText('');
     }
@@ -454,6 +469,7 @@ var GiftedMessenger = React.createClass({
           onKeyboardWillShow={this.onKeyboardWillShow}
           onKeyboardDidShow={this.onKeyboardDidShow}
           onKeyboardWillHide={this.onKeyboardWillHide}
+          onKeyboardDidHide={this.onKeyboardDidHide}
 
 
           /*
@@ -501,6 +517,7 @@ var GiftedMessenger = React.createClass({
             autoFocus={this.props.autoFocus}
             returnKeyType={this.props.submitOnReturn ? 'send' : 'default'}
             onSubmitEditing={this.props.submitOnReturn ? this.onSend : null}
+            enablesReturnKeyAutomatically={true}
 
             blurOnSubmit={false}
           />
