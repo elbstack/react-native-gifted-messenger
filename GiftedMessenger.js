@@ -88,7 +88,8 @@ var GiftedMessenger = React.createClass({
     forceRenderImage: React.PropTypes.bool,
     dismissKeyboardOnDrag: React.PropTypes.bool,
     onChangeText: React.PropTypes.func,
-    renderStatus: React.PropTypes.func
+    renderStatus: React.PropTypes.func,
+    renderTextInput: React.PropTypes.func
   },
 
   getInitialState: function() {
@@ -505,7 +506,9 @@ var GiftedMessenger = React.createClass({
   },
 
   renderTextInput() {
-    if (this.props.hideTextInput === false) {
+    if (this.props.renderTextInput instanceof Function) {
+      return this.props.renderTextInput();
+    } else if (this.props.hideTextInput === false) {
       return (
         <View style={this.styles.textInputContainer}>
           <TextInput
