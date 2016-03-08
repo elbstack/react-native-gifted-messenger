@@ -89,7 +89,8 @@ var GiftedMessenger = React.createClass({
     dismissKeyboardOnDrag: React.PropTypes.bool,
     onChangeText: React.PropTypes.func,
     renderStatus: React.PropTypes.func,
-    renderTextInput: React.PropTypes.func
+    renderTextInput: React.PropTypes.func,
+    textInputHeight: React.PropTypes.number
   },
 
   getInitialState: function() {
@@ -98,7 +99,7 @@ var GiftedMessenger = React.createClass({
 
     var textInputHeight = 0;
     if (this.props.hideTextInput === false) {
-      textInputHeight = 44;
+      textInputHeight = this.props.textInputHeight || 44;
     }
 
     this.listViewMaxHeight = this.props.maxHeight - textInputHeight;
