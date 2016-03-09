@@ -55,6 +55,7 @@ var GiftedMessenger = React.createClass({
       submitOnReturn: false,
       forceRenderImage: false,
       dismissKeyboardOnDrag: false,
+      keyboardShouldPersistTaps: true,
       onChangeText: (text) => {},
     };
   },
@@ -87,6 +88,7 @@ var GiftedMessenger = React.createClass({
     hideTextInput: React.PropTypes.bool,
     forceRenderImage: React.PropTypes.bool,
     dismissKeyboardOnDrag: React.PropTypes.bool,
+    keyboardShouldPersistTaps: React.PropTypes.bool,
     onChangeText: React.PropTypes.func,
     renderStatus: React.PropTypes.func,
     renderTextInput: React.PropTypes.func,
@@ -479,7 +481,7 @@ var GiftedMessenger = React.createClass({
             keyboardDismissMode='interactive'
           */
 
-          keyboardShouldPersistTaps={true}
+          keyboardShouldPersistTaps={this.props.keyboardShouldPersistTaps}
           keyboardDismissMode='interactive'
 
 
